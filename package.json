@@ -5,7 +5,7 @@
  "description": "",
  "main": "index.js",
  "scripts": {
-  "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
+  "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend && npm install concurrently",
   "start": "concurrently \"npm start --prefix backend\" \"npm start --prefix frontend\"",
   "predeploy": "npm run build --prefix frontend",
   "deploy": "gh-pages -d frontend/dist",
