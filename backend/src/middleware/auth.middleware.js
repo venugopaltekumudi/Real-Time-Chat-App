@@ -3,6 +3,7 @@ import User from "../models/user.model.js";
 
 export const protectRoute = async (req, res, next) => {
   try {
+    console.log("JWT_SECRET:", process.env.JWT_SECRET); // Added this line
     const token = req.cookies.jwt;
 
     if (!token) {
@@ -27,7 +28,10 @@ export const protectRoute = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log("Error in protectRoute middleware: ", error.message);
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({ message: "Unauthorized - Invalid Token" });
+    }
+    console.error("Error in protectRoute middleware: ", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
